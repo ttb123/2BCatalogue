@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Two Brushes — Handmade Gifting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Courier+Prime&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"><style>
+  :root{
+    --white:#FFFFFF;
+    --pink:#D9A6AC;
+    --pink-deep:#C48891;
+    --pink-tint:#FBF1F1;
+    --pink-tint-2:#F5E3E4;
+    --brown:#4A2C28;
+    --brown-soft:#6E4C45;
+    --brown-faint:#9C7F79;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow:0 6px 24px rgba(74,44,40,0.10);
+    --shadow-sm:0 3px 12px rgba(74,44,40,0.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  /* offset anchors so the sticky nav doesn't cover the section heading on jump */
+  #home, #rakhi, #products, #faqs, #about, #contact, #customized, #budget{
+    scroll-margin-top:56px;
+  }
+
+  body{
+    background:var(--white);
+    color:var(--brown);
+    font-family:'Jost', sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Cormorant Garamond', serif;
+    color:var(--brown);
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+
+  a{ text-decoration:none; color:inherit; }
+  button{ font-family:inherit; border:none; cursor:pointer; background:none; }
+  img,.placeholder{ display:block; }
+
+  .container{ max-width:1100px; margin:0 auto; padding:0 18px; }
+
+  /* ============ HEADER ============ */
+  header{ background:var(--white); }
+
+  .brand-row{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:22px 16px 16px;
+    background:var(--white);
+  }
+
+  .brand-logo-img{
+    width:150px; height:150px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto;
+  }
+  @media(min-width:700px){
+    .brand-logo-img{ width:190px; height:190px; }
+  }
+
+  .brand-tagline{
+    font-family:'Jost',sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--brown-faint);
+    margin-top:6px;
+  }
+
+  nav.navbar{
+    background:var(--pink);
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 10px rgba(74,44,40,0.12);
+  }
+  .nav-scroll{
+    display:flex;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  .nav-scroll::-webkit-scrollbar{ display:none; }
+  .nav-scroll a{
+    flex:0 0 auto;
+    padding:14px 16px;
+    font-size:0.74rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--brown);
+    font-weight:500;
+    white-space:nowrap;
+    border-bottom:2px solid transparent;
+    transition:border-color .2s ease, opacity .2s ease;
+  }
+  .nav-scroll a:active, .nav-scroll a.active{
+    border-bottom:2px solid var(--brown);
+  }
+  @media(min-width:700px){
+    .nav-scroll{ justify-content:center; }
+    .nav-scroll a{ padding:16px 22px; font-size:0.8rem; }
+  }
+
+  /* ============ HERO CAROUSEL ============ */
+  /* ============ ANNOUNCEMENT TICKER ============ */
+  .ticker-wrap{
+    width:100%;
+    height:40px;
+    background:#FFF8F0;
+    border-top:1px solid var(--pink-tint-2);
+    border-bottom:1px solid var(--pink-tint-2);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    position:relative;
+  }
+  .ticker-track{
+    display:flex;
+    width:max-content;
+    animation:tickerScroll 60s linear infinite;
+    will-change:transform;
+  }
+  .ticker-wrap:hover .ticker-track,
+  .ticker-wrap:focus-within .ticker-track{
+    animation-play-state:paused;
+  }
+  .ticker-item{
+    display:inline-block;
+    white-space:nowrap;
+    padding:0 20px;
+     font-family:'Jost',sans-serif;
+    font-size:0.58rem;
+    letter-spacing:0.20em;
+    font-weight:400;
+    /*font-size:0.78rem;
+    letter-spacing:0.1em;*/
+    color:var(--brown);
+    
+  }
+  @keyframes tickerScroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media(min-width:700px){
+    .ticker-wrap{ height:45px; }
+    .ticker-item{ font-size:0.88rem; padding:0 36px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation:none; }
+  }
+
+  .hero-wrap{
+    padding:18px 16px 6px;
+    background:var(--white);
+  }
+  .carousel{
+    position:relative;
+    max-width:1100px;
+    margin:0 auto;
+    aspect-ratio:1/1;
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  @media(min-width:800px){
+    .carousel{ aspect-ratio:16/7; }
+  }
+  .carousel-track{
+    display:flex;
+    height:100%;
+    transition:transform .45s cubic-bezier(.65,0,.35,1);
+  }
+  .carousel-slide{
+    flex:0 0 100%;
+    height:100%;
+    background:linear-gradient(135deg,var(--pink-tint) 0%, var(--pink-tint-2) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .carousel-slide span{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem;
+    color:var(--brown-faint);
+    letter-spacing:0.08em;
+  }
+  .carousel-slide img{
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .product-img img, .addon-img img{
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .carousel-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:38px; height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow-sm);
+    color:var(--brown);
+    font-size:1.1rem;
+    z-index:3;
+  }
+  .carousel-arrow.left{ left:12px; }
+  .carousel-arrow.right{ right:12px; }
+  .carousel-dots{
+    position:absolute;
+    bottom:14px; left:0; right:0;
+    display:flex; gap:7px; justify-content:center;
+  }
+  .carousel-dots .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:rgba(255,255,255,0.7);
+  }
+  .carousel-dots .dot.active{ background:var(--brown); }
+
+  /* ============ CATEGORY CARDS ============ */
+  .categories{
+    padding:34px 16px 8px;
+  }
+  .cat-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  @media(min-width:700px){
+    .cat-grid{ grid-template-columns:1fr 1fr 1fr; }
+  }
+  .cat-card{
+    background:var(--pink-tint);
+    border-radius:var(--radius-lg);
+    padding:26px 20px;
+    text-align:center;
+    box-shadow:var(--shadow-sm);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .cat-card:active{ transform:scale(0.98); }
+  .cat-card h3{ font-size:1.3rem; margin-bottom:4px; }
+  .cat-card p{ font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--brown-faint); }
+
+  /* ============ SECTION HEADINGS ============ */
+  .section-head{
+    text-align:center;
+    padding:44px 16px 6px;
+  }
+  .section-head h2{
+    font-size:1.9rem;
+    letter-spacing:0.03em;
+  }
+  .section-head .sub{
+    font-size:0.78rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--pink-deep);
+    margin-top:4px;
+  }
+  .subsection-title{
+    text-align:center;
+    font-size:1.35rem;
+    padding:30px 16px 4px;
+    color:var(--brown);
+  }
+  .rakhi-main-title{
+    font-size:2.5rem;
+  }
+  @media(min-width:700px){
+    .rakhi-main-title{ font-size:3rem; }
+  }
+
+  /* ============ PRODUCT GRID ============ */
+  .product-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    padding:16px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  @media(min-width:700px){
+    .product-grid{ grid-template-columns:repeat(4,1fr); gap:18px; padding:16px 18px; }
+  }
+  .product-card{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-sm);
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .product-img{
+    aspect-ratio:1/1;
+    background:linear-gradient(135deg,var(--pink-tint) 0%, var(--pink-tint-2) 100%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .product-img span{ font-size:0.68rem; color:var(--brown-faint); letter-spacing:0.05em; }
+  .product-info{ padding:10px 12px 14px; text-align:center; }
+  .product-info h4{ font-size:0.92rem; font-weight:600; margin-bottom:3px; line-height:1.25; }
+  .product-info .price{ font-size:0.88rem; color:var(--pink-deep); font-weight:600; margin-bottom:9px; }
+  .btn-view{
+    display:inline-block;
+    width:100%;
+    padding:8px 0;
+    border-radius:var(--radius-sm);
+    background:var(--brown);
+    color:var(--white);
+    font-size:0.66rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+
+  /* ============ ABOUT ============ */
+  .about{
+    background:var(--pink-tint);
+    padding:50px 20px;
+    text-align:center;
+  }
+  .about-logo{
+    width:110px; height:110px;
+    object-fit:contain;
+    margin:0 auto 14px;
+    display:block;
+  }
+  .about p{
+    max-width:520px;
+    margin:0 auto;
+    font-size:0.92rem;
+    line-height:1.7;
+    color:var(--brown-soft);
+  }
+
+  /* ============ CONTACT ============ */
+  .contact{
+    padding:46px 20px 60px;
+    text-align:center;
+  }
+  .contact-links{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-width:320px;
+    margin:22px auto 0;
+  }
+  .contact-links a{
+    background:var(--white);
+    border:1px solid var(--pink-tint-2);
+    border-radius:var(--radius-md);
+    padding:14px;
+    font-size:0.85rem;
+    font-weight:500;
+    box-shadow:var(--shadow-sm);
+  }
+
+  footer{
+    text-align:center;
+    padding:20px;
+    font-size:0.7rem;
+    letter-spacing:0.1em;
+    color:var(--brown-faint);
+    text-transform:uppercase;
+  }
+
+  /* ============ PRODUCT DETAIL OVERLAY ============ */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:var(--white);
+    z-index:200;
+    overflow-y:auto;
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.65,0,.35,1);
+  }
+  .overlay.open{ transform:translateX(0); }
+
+  .overlay-top{
+    position:sticky; top:0;
+    background:var(--white);
+    padding:14px 16px;
+    display:flex; align-items:center;
+    border-bottom:1px solid var(--pink-tint-2);
+    z-index:5;
+  }
+  .overlay-close{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--pink-tint);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem;
+    color:var(--brown);
+    margin-right:10px;
+  }
+  .overlay-top span{ font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--brown-faint); }
+
+  .pd-carousel{
+    aspect-ratio:1/1;
+    margin:16px;
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .pd-name{ text-align:center; font-size:1.5rem; padding:6px 20px 0; }
+  .pd-price{ text-align:center; font-size:1.05rem; color:var(--pink-deep); font-weight:600; padding-top:4px; }
+
+  .pd-buttons{
+    display:flex; gap:10px;
+    padding:18px 16px 6px;
+    max-width:500px;
+    margin:0 auto;
+  }
+  .pd-buttons button, .pd-buttons a{
+    flex:1;
+    text-align:center;
+    padding:13px 8px;
+    border-radius:var(--radius-md);
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .btn-addons{ background:var(--pink-tint); color:var(--brown); }
+  .btn-insta{ background:var(--brown); color:var(--white); }
+
+  .pd-block-title{
+    font-size:1.15rem;
+    padding:30px 20px 8px;
+  }
+  .pd-bullets{
+    list-style:none;
+    padding:0 20px 10px;
+    max-width:520px;
+    margin:0 auto;
+  }
+  .pd-bullets li{
+    font-size:0.85rem;
+    color:var(--brown-soft);
+    padding:8px 0 8px 20px;
+    position:relative;
+    border-bottom:1px solid var(--pink-tint);
+  }
+  .pd-bullets li::before{
+    content:"";
+    position:absolute; left:0; top:16px;
+    width:6px; height:6px; border-radius:50%;
+    background:var(--pink);
+  }
+
+  .hamper-includes{
+    max-width:520px;
+    margin:0 auto 6px;
+    padding:0 20px;
+  }
+  .hamper-includes-title{
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--pink-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .hamper-includes-list{
+    list-style:none;
+    counter-reset:hamper-count;
+  }
+  .hamper-includes-list li{
+    counter-increment:hamper-count;
+    font-size:0.87rem;
+    color:var(--brown);
+    padding:8px 0 8px 30px;
+    position:relative;
+    border-bottom:1px solid var(--pink-tint);
+  }
+  .hamper-includes-list li::before{
+    content:counter(hamper-count);
+    position:absolute; left:0; top:7px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:var(--brown);
+    color:var(--white);
+    font-size:0.68rem;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Jost',sans-serif;
+  }
+
+  /* ============ FAQ ACCORDION ============ */
+  .faq-list{
+    max-width:600px;
+    margin:24px auto 40px;
+    padding:0 16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .faq-item{
+    background:var(--white);
+    border:1px solid var(--pink-tint-2);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-sm);
+    overflow:hidden;
+  }
+  .faq-question{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:14px 16px;
+    text-align:left;
+    font-size:0.9rem;
+    font-weight:500;
+    color:var(--brown);
+  }
+  .faq-question .icon{
+    flex:0 0 auto;
+    width:20px; height:20px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--pink-deep);
+    font-size:1.1rem;
+    transition:transform .25s ease;
+  }
+  .faq-item.open .faq-question .icon{ transform:rotate(45deg); }
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .faq-answer-inner{
+    padding:0 16px 16px;
+    font-size:0.85rem;
+    line-height:1.6;
+    color:var(--brown-soft);
+  }
+
+  .addon-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    padding:12px 16px 40px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  @media(min-width:700px){
+    .addon-grid{ grid-template-columns:repeat(4,1fr); }
+  }
+  .addon-card{
+    background:var(--white);
+    border:1px solid var(--pink-tint-2);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+  }
+  .addon-img{
+    aspect-ratio:1/1;
+    background:var(--pink-tint);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .addon-img span{ font-size:0.62rem; color:var(--brown-faint); }
+  .addon-info{ padding:9px 10px 12px; text-align:center; }
+  .addon-info h5{ font-family:'Jost'; font-size:0.78rem; font-weight:500; margin-bottom:2px; }
+  .addon-info .price{ font-size:0.76rem; color:var(--pink-deep); font-weight:600; }
+
+  body.lock{ overflow:hidden; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-row">
+    <img class="brand-logo-img" src="images/thetwobrushes_logo.jpg" alt="The Two Brushes logo">
+    <div class="brand-tagline">Handmade Gifting Studio</div>
+  </div>
+  <nav class="navbar">
+    <div class="nav-scroll">
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#rakhi">Rakhi Shop</a>
+      <a href="#faqs">FAQs</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+  </nav>
+</header>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+    <span class="ticker-item">🎉 Celebrate Rakhi with 10% off on all Customized Rakhi Hampers&nbsp;&nbsp;|&nbsp;&nbsp;Offer Valid Till 1st August 🎁</span>
+  </div>
+</div>
+
+<main>
+  <!-- HOME / HERO -->
+  <section id="home" class="hero-wrap">
+    <div class="carousel" id="heroCarousel">
+      <div class="carousel-track" id="heroTrack">
+        <div class="carousel-slide"><img src="images/c1.jpg" alt="Hero 1"></div>
+        <div class="carousel-slide"><img src="images/c2.png" alt="Hero 2"></div>
+        <div class="carousel-slide"><img src="images/c3.jpg" alt="Hero 3"></div>
+      </div>
+      <button class="carousel-arrow left" onclick="moveHero(-1)">&#8249;</button>
+      <button class="carousel-arrow right" onclick="moveHero(1)">&#8250;</button>
+      <div class="carousel-dots" id="heroDots"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORY CARDS -->
+  <section class="categories">
+    <div class="cat-grid">
+      <a class="cat-card" href="#customized">
+        <h3>Customized Rakhi Hampers</h3>
+        <p>Made For You</p>
+      </a>
+      <a class="cat-card" href="#budget">
+        <h3>Non Customized Rakhi Hampers</h3>
+        <p>Ready To Ship</p>
+      </a>
+      <a class="cat-card" href="#products">
+        <h3>All Products</h3>
+        <p>Browse Everything</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- RAKHI COLLECTION -->
+  <section id="rakhi">
+    <div class="section-head">
+      <h2 class="rakhi-main-title">RAKHI COLLECTION</h2>
+    </div>
+    <h3 class="subsection-title">Budget Friendly Hampers</h3>
+    <div id="budget" class="product-grid" data-category="budget"></div>
+
+    <h3 id="customized" class="subsection-title">Customized Hampers</h3>
+    <div class="product-grid" data-category="customized"></div>
+  </section>
+
+  <!-- ALL PRODUCTS -->
+  <section id="products">
+    <div class="section-head">
+      <h2>HandPainted Products</h2>
+      <div class="sub">Unique & Personalized</div>
+    </div>
+    <div class="product-grid" data-category="individual"></div>
+  </section>
+
+  <!-- FAQS -->
+  <section id="faqs">
+    <div class="section-head">
+      <h2>FAQs</h2>
+      <div class="sub">Good To Know</div>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <img class="about-logo" src="images/thetwobrushes_logo.jpg" alt="The Two Brushes logo">
+    <p>Every hamper is hand painted, hand packed and made with care — a small studio bringing thoughtful, personal gifting to every occasion.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="section-head" style="padding-top:0;">
+      <h2>Contact Us</h2>
+    </div>
+    <div class="contact-links">
+      <a href="https://www.instagram.com/thetwobrushes/" target="_blank">Instagram — @thetwobrushes</a>
+      <a href="mailto:thetwobrushes@gmail.com">Email — thetwobrushes@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>The Two Brushes — Handmade With Love</footer>
+
+<!-- PRODUCT DETAIL OVERLAY -->
+<div class="overlay" id="pdOverlay">
+  <div class="overlay-top">
+    <div class="overlay-close" onclick="closeProduct()">&#8592;</div>
+    <span>Product Details</span>
+  </div>
+
+  <div class="pd-carousel" id="pdCarousel">
+    <div class="carousel-track" id="pdTrack">
+      <div class="carousel-slide"><span>Image 1</span></div>
+      <div class="carousel-slide"><span>Image 2</span></div>
+      <div class="carousel-slide"><span>Image 3</span></div>
+    </div>
+    <button class="carousel-arrow left" onclick="movePd(-1)">&#8249;</button>
+    <button class="carousel-arrow right" onclick="movePd(1)">&#8250;</button>
+  </div>
+
+  <h2 class="pd-name" id="pdName">Product Name</h2>
+  <div class="pd-price" id="pdPrice">₹0</div>
+
+  <div class="pd-buttons">
+    <button class="btn-addons" onclick="scrollToAddons()">Add-Ons</button>
+    <a class="btn-insta" href="https://ig.me/m/thetwobrushes" target="_blank">Order On Instagram</a>
+  </div>
+
+  <h3 class="pd-block-title">Product Information</h3>
+  <div id="pdInfo"></div>
+
+  <h3 class="pd-block-title" id="addonsAnchor">Add-Ons</h3>
+  <div class="addon-grid" id="pdAddons"></div>
+</div>
+
+<script>
+/* ---------- HERO CAROUSEL ---------- */
+let heroIndex = 0;
+const heroSlides = 3;
+const heroTrack = document.getElementById('heroTrack');
+const heroDots = document.getElementById('heroDots');
+for(let i=0;i<heroSlides;i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  heroDots.appendChild(d);
+}
+function updateHero(){
+  heroTrack.style.transform = `translateX(-${heroIndex*100}%)`;
+  [...heroDots.children].forEach((d,i)=>d.classList.toggle('active', i===heroIndex));
+}
+function moveHero(dir){
+  heroIndex = (heroIndex + dir + heroSlides) % heroSlides;
+  updateHero();
+}
+setInterval(()=>moveHero(1), 5000);
+
+/* ---------- PRODUCT DATA ---------- */
+/* ---------- FAQ DATA ---------- */
+/* Add or edit questions here. Each item needs a question and an answer. */
+const faqs = [
+  {question:"How do I place an order?", answer:"DM us directly with the product name and any customization details or Tap 'Order On Instagram' on any product page to redirect to instagram."},
+  {question:"Can I customize the rakhi or select rakhi of my choice?", answer:"Yes, currently we have a few pre-selected rakhi designs. If you want a specific rakhi, please DM us on Instagram with the design and we will try to source it for you."},
+  {question:"How long does it take to deliver the order?", answer:"Non-customized hampers can be delivered within 4-5 days. Customized and personalised items take 7-10 days to deliver."}, 
+  {question:"Is International Shipping Available?", answer:"Yes, we ship across worldwide. Shipping charges are added at checkout based on your location."},
+  {question:"Is customization of hamper possible?", answer:"Yes, we can try to customize the hamper based on your requirements. Please DM us on Instagram with your requirements and we will get back to you if this is feasible."},  
+  {question:"How to send photos for customized hampers?", answer:"You can send us the photos via Instagram DM or email. Please ensure the photos are clear and high resolution and not selfies for best results. "},
+  {question:"How accurate are your paintings?", answer:"Since these are hand painted illustrations, we try to make them as accurate as possible. However, please note that there may be slight variations in the final product. Please refer to the sample images for reference."}
+];
+
+/* ---------- PRODUCT DATA ---------- */
+const products = [
+  {id:1, name:"Evil Eye Hamper", price:"₹349 + shipping", category:"budget", imageCount:3, photos:["images/evileye1.png","images/evileye2.png","images/evileye3.png"],
+    bullets:["Hamper includes: 1. Evil Eye Keychain 2. Evil Eye Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"ExtraKumkum & Rice Set",price:"₹39"}]},
+
+  {id:2, name:"Doremon-Doremi Hamper", price:"₹449 + shipping", category:"budget", imageCount:3, photos:["images/dorehamp1.png","images/dorehamp2.png","images/dorehamp3.png"],
+    bullets:["Hamper includes: 1. Doremon-Doremi Keychain 2. Religious Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:3, name:"Car Charm Hamper", price:"₹599 + shipping", category:"budget", imageCount:3, photos:["images/carcharm1.png","images/carcharm2.png","images/carcharm3.png"],
+    bullets:["Hamper includes: 1. Car Charm 2. Religious Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:4, name:"Walletcard Hamper", price:"₹649 + shipping", category:"customized", imageCount:4, photos:["images/WCH1.png","images/WCH2.png","images/WCH3.png","images/WCH4.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration WalletCard 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:5, name:"Keychain Hamper", price:"₹699 + shipping", category:"customized", imageCount:4, photos:["images/KCH1.png","images/KCH2.png","images/KCH3.png","images/KCH4.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration Keychain 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:6, name:"FridgeMagnet Hamper", price:"₹849 + shipping", category:"customized", imageCount:4, photos:["images/FMH1.png","images/FMH2.png","images/FMH3.png","images/FMH4.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration FridgeMagnet 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:7, name:"TableTop Hamper", price:"₹999 + shipping", category:"customized", imageCount:4, photos:["images/TTH1.png","images/TTH2.png","images/TTH3.png","images/TTH4.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration TableTop with stand 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"ExtraKumkum & Rice Set",price:"₹39"}]},
+
+  {id:8, name:"NamePlate Hamper Without photo", price:"₹1799 + shipping", category:"customized", imageCount:3, photos:["images/NPH1.png","images/NPH2.png","images/NPH3.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate without photo 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:9, name:"NamePlate Hamper With photo", price:"₹2599 + shipping", category:"customized", imageCount:3, photos:["images/NPH1.png","images/NPH2.png","images/NPH3.png"],
+   bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate with photo 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+
+  {id:10, name:"HandPainted Wallet Card", price:"₹499 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration wallet card","Product Size: 2.5 x 3 inches","Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+
+  {id:11, name:"HandPainted Keychain", price:"₹549 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration Keychain","Product Size: 2.5 x 3 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+
+  {id:12, name:"HandPainted Fridgemagnet", price:"₹699 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration Fridgemagnet","Product Size: 3.5 x 4 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+
+  {id:13, name:"HandPainted TableTop", price:"₹849 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration TableTop","Product Size: 4 x 4 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+
+  {id:14, name:"NamePlate Without photo", price:"₹1499 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration NamePlate without photo","Product Size: 16 x 6 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+
+  {id:15, name:"NamePlate with photo", price:"₹2399 + shipping", category:"individual", imageCount:3, photos:[],
+    bullets:["Handpainted illustration NamePlate with photo","Product Size: 16 x 6 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]}
+];
+
+
+/* ---------- RENDER GRIDS ---------- */
+function productCard(p){
+  const thumbHtml = (p.photos && p.photos[0])
+    ? `<img src="${p.photos[0]}" alt="${p.name}" loading="lazy">`
+    : `<span>Image Placeholder</span>`;
+  return `<div class="product-card">
+      <div class="product-img" onclick="openProduct(${p.id})">${thumbHtml}</div>
+      <div class="product-info">
+        <h4>${p.name}</h4>
+        <div class="price">${p.price}</div>
+        <button class="btn-view" onclick="openProduct(${p.id})">View Details</button>
+      </div>
+    </div>`;
+}
+document.querySelectorAll('.product-grid').forEach(grid=>{
+  const cat = grid.dataset.category;
+  const list = products.filter(p=>p.category===cat);
+  grid.innerHTML = list.map(productCard).join('');
+});
+
+/* ---------- FAQ ACCORDION ---------- */
+const faqList = document.getElementById('faqList');
+faqList.innerHTML = faqs.map((f,i)=>`
+    <div class="faq-item" id="faqItem${i}">
+      <button class="faq-question" onclick="toggleFaq(${i})">
+        <span>${f.question}</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer" id="faqAnswer${i}">
+        <div class="faq-answer-inner">${f.answer}</div>
+      </div>
+    </div>`).join('');
+
+function toggleFaq(i){
+  const item = document.getElementById('faqItem'+i);
+  const answer = document.getElementById('faqAnswer'+i);
+  const isOpen = item.classList.contains('open');
+  if(isOpen){
+    item.classList.remove('open');
+    answer.style.maxHeight = null;
+  } else {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+/* ---------- PRODUCT DETAIL OVERLAY ---------- */
+const overlay = document.getElementById('pdOverlay');
+let pdIndex = 0, pdSlideCount = 3;
+
+function renderProductInfo(bullets){
+  const hamperBullet = bullets.find(b => /^hamper includes\s*:/i.test(b.trim()));
+  const otherBullets = bullets.filter(b => b !== hamperBullet);
+  let html = '';
+  if(hamperBullet){
+    const afterColon = hamperBullet.replace(/^hamper includes\s*:\s*/i, '');
+    const items = afterColon.split(/\d+\.\s+/).map(s=>s.trim()).filter(Boolean);
+    html += `<div class="hamper-includes">
+        <div class="hamper-includes-title">What's Inside</div>
+        <ol class="hamper-includes-list">${items.map(i=>`<li>${i}</li>`).join('')}</ol>
+      </div>`;
+  }
+  if(otherBullets.length){
+    html += `<ul class="pd-bullets">${otherBullets.map(b=>`<li>${b}</li>`).join('')}</ul>`;
+  }
+  return html;
+}
+
+function openProduct(id){
+  const p = products.find(x=>x.id===id);
+  document.getElementById('pdName').textContent = p.name;
+  document.getElementById('pdPrice').textContent = p.price;
+  document.getElementById('pdInfo').innerHTML = renderProductInfo(p.bullets);
+  document.getElementById('pdAddons').innerHTML = p.addons.map(a=>{
+      const addonImgHtml = a.image ? `<img src="${a.image}" alt="${a.name}" loading="lazy">` : `<span>Image</span>`;
+      return `<div class="addon-card">
+        <div class="addon-img">${addonImgHtml}</div>
+        <div class="addon-info"><h5>${a.name}</h5><div class="price">${a.price}</div></div>
+      </div>`;
+    }).join('');
+
+  const hasPhotos = p.photos && p.photos.length > 0;
+  pdSlideCount = hasPhotos ? p.photos.length : p.imageCount;
+  const pdTrack = document.getElementById('pdTrack');
+  pdTrack.innerHTML = hasPhotos
+    ? p.photos.map((src,i)=>`<div class="carousel-slide"><img src="${src}" alt="${p.name} ${i+1}" style="width:100%;height:100%;object-fit:cover;"></div>`).join('')
+    : Array.from({length:pdSlideCount}).map((_,i)=>`<div class="carousel-slide"><span>Image ${i+1}</span></div>`).join('');
+  pdIndex = 0;
+  updatePd();
+
+  overlay.classList.add('open');
+  document.body.classList.add('lock');
+  overlay.scrollTop = 0;
+}
+function closeProduct(){
+  overlay.classList.remove('open');
+  document.body.classList.remove('lock');
+}
+function movePd(dir){
+  pdIndex = (pdIndex + dir + pdSlideCount) % pdSlideCount;
+  updatePd();
+}
+function updatePd(){
+  document.getElementById('pdTrack').style.transform = `translateX(-${pdIndex*100}%)`;
+}
+function scrollToAddons(){
+  document.getElementById('addonsAnchor').scrollIntoView({behavior:'smooth', block:'start'});
+}
+</script>
+
+</body>
+</html>
