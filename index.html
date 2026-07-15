@@ -571,6 +571,11 @@
     border-radius:var(--radius-md);
     overflow:hidden;
     box-shadow:var(--shadow-sm);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .addon-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow);
   }
   .addon-img{
     aspect-ratio:1/1;
@@ -581,6 +586,86 @@
   .addon-info{ padding:9px 10px 12px; text-align:center; }
   .addon-info h5{ font-family:'Jost'; font-size:0.78rem; font-weight:500; margin-bottom:2px; }
   .addon-info .price{ font-size:0.76rem; color:var(--pink-deep); font-weight:600; }
+
+  /* ============ AVAILABLE RAKHI DESIGNS ============ */
+  .rakhi-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    padding:12px 16px 40px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  @media(min-width:700px){
+    .rakhi-grid{ grid-template-columns:repeat(4,1fr); }
+  }
+  .rakhi-card{
+    background:var(--white);
+    border:1px solid var(--pink-tint-2);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .rakhi-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow);
+  }
+  .rakhi-carousel{
+    position:relative;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:var(--pink-tint);
+    touch-action:pan-y;
+  }
+  .rakhi-carousel-track{
+    display:flex;
+    height:100%;
+    transition:transform .35s cubic-bezier(.65,0,.35,1);
+  }
+  .rakhi-slide{
+    flex:0 0 100%;
+    height:100%;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--pink-tint) 0%, var(--pink-tint-2) 100%);
+  }
+  .rakhi-slide img{
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .rakhi-slide span{
+    font-size:0.62rem;
+    color:var(--brown-faint);
+  }
+  .rakhi-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:26px; height:26px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow-sm);
+    color:var(--brown);
+    font-size:0.8rem;
+    z-index:3;
+  }
+  .rakhi-arrow.left{ left:6px; }
+  .rakhi-arrow.right{ right:6px; }
+  .rakhi-dots{
+    position:absolute;
+    bottom:8px; left:0; right:0;
+    display:flex; gap:5px; justify-content:center;
+    z-index:3;
+  }
+  .rakhi-dots .dot{
+    width:5px; height:5px; border-radius:50%;
+    background:rgba(255,255,255,0.75);
+  }
+  .rakhi-dots .dot.active{ background:var(--brown); }
+  .rakhi-info{ padding:9px 10px 12px; text-align:center; }
+  .rakhi-info h5{ font-family:'Jost'; font-size:0.78rem; font-weight:500; margin-bottom:2px; }
+  .rakhi-info .price{ font-size:0.76rem; color:var(--pink-deep); font-weight:600; }
 
   body.lock{ overflow:hidden; }
 </style>
@@ -622,9 +707,9 @@
   <section id="home" class="hero-wrap">
     <div class="carousel" id="heroCarousel">
       <div class="carousel-track" id="heroTrack">
-        <div class="carousel-slide"><img src="images/c1.jpg" alt="Hero 1"></div>
-        <div class="carousel-slide"><img src="images/c2.png" alt="Hero 2"></div>
-        <div class="carousel-slide"><img src="images/c3.jpg" alt="Hero 3"></div>
+        <div class="carousel-slide"><img src="images/c1.jpeg" alt="Hero 1"></div>
+        <div class="carousel-slide"><img src="images/NP2.jpg" alt="Hero 2"></div>
+        <div class="carousel-slide"><img src="images/c2.jpg" alt="Hero 3"></div>
       </div>
       <button class="carousel-arrow left" onclick="moveHero(-1)">&#8249;</button>
       <button class="carousel-arrow right" onclick="moveHero(1)">&#8250;</button>
@@ -730,6 +815,9 @@
 
   <h3 class="pd-block-title" id="addonsAnchor">Add-Ons</h3>
   <div class="addon-grid" id="pdAddons"></div>
+
+  <h3 class="pd-block-title" id="rakhiDesignsTitle">Rakhi Options</h3>
+  <div class="rakhi-grid" id="pdRakhiDesigns"></div>
 </div>
 
 <script>
@@ -758,7 +846,7 @@ setInterval(()=>moveHero(1), 5000);
 /* Add or edit questions here. Each item needs a question and an answer. */
 const faqs = [
   {question:"How do I place an order?", answer:"DM us directly with the product name and any customization details or Tap 'Order On Instagram' on any product page to redirect to instagram."},
-  {question:"Can I customize the rakhi or select rakhi of my choice?", answer:"Yes, currently we have a few pre-selected rakhi designs. If you want a specific rakhi, please DM us on Instagram with the design and we will try to source it for you."},
+  {question:"Can I customize the rakhi or select rakhi of my choice?", answer:"Yes, currently we have a few pre-selected rakhi designs in crochet, kids version and default one's.Some of them are chargeable according to the design.In the default religious one you can receive any one of the following: ganesh, trishul, krishna"},
   {question:"How long does it take to deliver the order?", answer:"Non-customized hampers can be delivered within 4-5 days. Customized and personalised items take 7-10 days to deliver."}, 
   {question:"Is International Shipping Available?", answer:"Yes, we ship across worldwide. Shipping charges are added at checkout based on your location."},
   {question:"Is customization of hamper possible?", answer:"Yes, we can try to customize the hamper based on your requirements. Please DM us on Instagram with your requirements and we will get back to you if this is feasible."},  
@@ -767,66 +855,76 @@ const faqs = [
 ];
 
 /* ---------- PRODUCT DATA ---------- */
+/* ---------- AVAILABLE RAKHI DESIGNS ---------- */
+/* Shown only on budget & customized hamper products, not on individual items. */
+/* Add or edit designs here — each needs a name, price, and up to 3 photo paths. */
+const rakhiDesigns = [
+  {name:"Default Religious Rakhi", price:"+ ₹0", photos:["images/DR1.png"]},
+  {name:"Kids Cartoon Rakhi", price:"+ ₹50", photos:["images/CR1.jpg","images/CR2.jpg","images/CR3.jpg"]},
+  {name:"Crochet Rakhi", price:"+ ₹60", photos:["images/crorakhi1.jpg","images/crorakhi2.jpg","images/crorakhi3.jpg"]},
+  {name:"Evil eye Rakhi", price:"+ ₹0", photos:["images/evileye3.png"]}
+];
+
 const products = [
   {id:1, name:"Evil Eye Hamper", price:"₹349 + shipping", category:"budget", imageCount:3, photos:["images/evileye1.png","images/evileye2.png","images/evileye3.png"],
     bullets:["Hamper includes: 1. Evil Eye Keychain 2. Evil Eye Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"ExtraKumkum & Rice Set",price:"₹39"}]},
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"ExtraKumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:2, name:"Doremon-Doremi Hamper", price:"₹449 + shipping", category:"budget", imageCount:3, photos:["images/dorehamp1.png","images/dorehamp2.png","images/dorehamp3.png"],
-    bullets:["Hamper includes: 1. Doremon-Doremi Keychain 2. Religious Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:2, name:"Doremon-Doremi Hamper", price:"₹449 + shipping", category:"budget", imageCount:3, photos:["images/dorehamp1.png","images/dorehamp2.png","images/RKH.png"],
+    bullets:["Hamper includes: 1. Doremon-Doremi Keychain 2. Religious Rakhi(Any one) along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"ExtraKumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
+    
+  {id:3, name:"Car Charm Hamper", price:"₹599 + shipping", category:"budget", imageCount:4, photos:["images/carcharm1.png","images/carcharm2.png","images/carcharm3.png","images/RKH.png"],
+    bullets:["Hamper includes: 1. Car Charm 2. Religious Rakhi(Any one) along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"ExtraKumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:3, name:"Car Charm Hamper", price:"₹599 + shipping", category:"budget", imageCount:3, photos:["images/carcharm1.png","images/carcharm2.png","images/carcharm3.png"],
-    bullets:["Hamper includes: 1. Car Charm 2. Religious Rakhi along with greeting card 3. Set of 2 Ferrero Rocher chocolates 4. Mini Glass bottles of kumkum and rice ","Ready to ship","Resin coated","Delivery Time: 3-4 Days after dispatch","Eco-friendly packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:4, name:"Walletcard Hamper", price:"₹649 + shipping", category:"customized", imageCount:4, photos:["images/WCH1.png","images/WCH2.png","images/WC1.png","images/RKH.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration WalletCard 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"Extra Kumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:4, name:"Walletcard Hamper", price:"₹649 + shipping", category:"customized", imageCount:4, photos:["images/WCH1.png","images/WCH2.png","images/WCH3.png","images/WCH4.png"],
-    bullets:["Hamper includes: 1. Customized HandPainted illustration WalletCard 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:5, name:"Keychain Hamper", price:"₹699 + shipping", category:"customized", imageCount:5, photos:["images/KCH1.png","images/KCH2.png","images/KCH3.png","images/KC2.png","images/RKH.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration Keychain 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"Extra Kumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:5, name:"Keychain Hamper", price:"₹699 + shipping", category:"customized", imageCount:4, photos:["images/KCH1.png","images/KCH2.png","images/KCH3.png","images/KCH4.png"],
-    bullets:["Hamper includes: 1. Customized HandPainted illustration Keychain 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:6, name:"FridgeMagnet Hamper", price:"₹849 + shipping", category:"customized", imageCount:4, photos:["images/FMH1.png","images/FMH3.png","images/FM3.jpg","images/RKH.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration FridgeMagnet 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"Extra Kumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:6, name:"FridgeMagnet Hamper", price:"₹849 + shipping", category:"customized", imageCount:4, photos:["images/FMH1.png","images/FMH2.png","images/FMH3.png","images/FMH4.png"],
-    bullets:["Hamper includes: 1. Customized HandPainted illustration FridgeMagnet 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:7, name:"TableTop Hamper", price:"₹999 + shipping", category:"customized", imageCount:4, photos:["images/TTH1.png","images/TTH2.png","images/TTH3.jpg","images/RKH.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration TableTop with stand 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"ExtraKumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:7, name:"TableTop Hamper", price:"₹999 + shipping", category:"customized", imageCount:4, photos:["images/TTH1.png","images/TTH2.png","images/TTH3.png","images/TTH4.png"],
-    bullets:["Hamper includes: 1. Customized HandPainted illustration TableTop with stand 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"ExtraKumkum & Rice Set",price:"₹39"}]},
+  {id:8, name:"NamePlate Hamper Without photo", price:"₹1799 + shipping", category:"customized", imageCount:2, photos:["images/NPW1.png","images/RKH.png"],
+    bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate without photo 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"Extra Kumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:8, name:"NamePlate Hamper Without photo", price:"₹1799 + shipping", category:"customized", imageCount:3, photos:["images/NPH1.png","images/NPH2.png","images/NPH3.png"],
-    bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate without photo 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:9, name:"NamePlate Hamper With photo", price:"₹2599 + shipping", category:"customized", imageCount:2, photos:["images/NP1.png","images/RKH.png"],
+   bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate with photo 2. Religious Rakhi(Any one) 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
+    addons:[{name:"Extra religious Rakhi",price:"₹49",image:"images/DR1.png"},{name:"Hand Written Note",price:"₹49",image:"images/AR2.jpg"},{name:"Extra Chocolates(Set of 2)",price:"₹79",image:"images/AR3.png"},{name:"Extra Kumkum & Rice Set",price:"₹39",image:"images/AR4.png"}]},
 
-  {id:9, name:"NamePlate Hamper With photo", price:"₹2599 + shipping", category:"customized", imageCount:3, photos:["images/NPH1.png","images/NPH2.png","images/NPH3.png"],
-   bullets:["Hamper includes: 1. Customized HandPainted illustration Nameplate with photo 2. Religious Rakhi 3. Greeting card 4. Set of 2 Ferrero Rocher chocolates 5. Mini Glass bottles of kumkum and rice ","Resin coated","Delivery Time: 7-10 Days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Extra religious Rakhi",price:"₹49"},{name:"Hand Written Note",price:"₹49"},{name:"Extra Chocolates(Set of 2)",price:"₹79"},{name:"Extra Kumkum & Rice Set",price:"₹39"}]},
+  {id:10, name:"Customized Wallet Card", price:"₹499 + shipping", category:"individual", imageCount:2, photos:["images/WC1.png","images/WCH2.png"],
+    bullets:["Handpainted illustration wallet card","Product Size: 2.5 x 3 inches","Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging with jute bag","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]},
 
-  {id:10, name:"HandPainted Wallet Card", price:"₹499 + shipping", category:"individual", imageCount:3, photos:[],
-    bullets:["Handpainted illustration wallet card","Product Size: 2.5 x 3 inches","Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+  {id:11, name:"Customized Keychain", price:"₹549 + shipping", category:"individual", imageCount:4, photos:["images/KC1.png","images/KC2.png","images/KC3.jpg","images/KC4.jpg"],
+    bullets:["Handpainted illustration Keychain","Product Size: 2.5 x 3 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging with jute bag","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]},
 
-  {id:11, name:"HandPainted Keychain", price:"₹549 + shipping", category:"individual", imageCount:3, photos:[],
-    bullets:["Handpainted illustration Keychain","Product Size: 2.5 x 3 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+  {id:12, name:"Customized Fridgemagnet", price:"₹699 + shipping", category:"individual", imageCount:3, photos:["images/FM1.jpg","images/FM2.jpg","images/FM3.jpg"],
+    bullets:["Handpainted illustration Fridgemagnet","Product Size: 3.5 x 4 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging with jute bag","DM us on Instagram if you have any query"],
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]},
 
-  {id:12, name:"HandPainted Fridgemagnet", price:"₹699 + shipping", category:"individual", imageCount:3, photos:[],
-    bullets:["Handpainted illustration Fridgemagnet","Product Size: 3.5 x 4 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
-
-  {id:13, name:"HandPainted TableTop", price:"₹849 + shipping", category:"individual", imageCount:3, photos:[],
+  {id:13, name:"Customized TableTop", price:"₹849 + shipping", category:"individual", imageCount:3, photos:["images/TT1.jpg","images/TT2.png","images/TTH3.jfif"],
     bullets:["Handpainted illustration TableTop","Product Size: 4 x 4 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]},
 
-  {id:14, name:"NamePlate Without photo", price:"₹1499 + shipping", category:"individual", imageCount:3, photos:[],
+  {id:14, name:"NamePlate Without photo", price:"₹1499 + shipping", category:"individual", imageCount:1, photos:["images/NPW1.png"],
     bullets:["Handpainted illustration NamePlate without photo","Product Size: 16 x 6 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]},
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]},
 
-  {id:15, name:"NamePlate with photo", price:"₹2399 + shipping", category:"individual", imageCount:3, photos:[],
+  {id:15, name:"NamePlate with photo", price:"₹2399 + shipping", category:"individual", imageCount:3, photos:["images/NP1.png","images/NP2.jpg","images/NP3.jpeg"],
     bullets:["Handpainted illustration NamePlate with photo","Product Size: 16 x 6 inches","Product is Resin coated","Delivery time: 7-10 days after order placement","Eco-friendly premium packaging","DM us on Instagram if you have any query"],
-    addons:[{name:"Chocolates(Set of 2)",price:"₹79"},{name:"Hand-Written Note",price:"₹49"},{name:"Mini Rose Bouquet",price:"₹79"}]}
+    addons:[{name:"Chocolates(Set of 2)",price:"₹79",image:"images/add1.jpg"},{name:"Hand-Written Note",price:"₹49",image:"images/add2.jpg"},{name:"Mini Rose Bouquet",price:"₹49",image:"images/add3.jpg"}]}
 ];
 
 
@@ -898,6 +996,84 @@ function renderProductInfo(bullets){
   return html;
 }
 
+/* ---------- AVAILABLE RAKHI DESIGNS: render + mini carousel ---------- */
+const rakhiCardState = {}; // cardId -> current slide index
+
+function rakhiCard(r, cardId){
+  const hasPhotos = r.photos && r.photos.length > 0;
+  const slideCount = hasPhotos ? r.photos.length : 1;
+  rakhiCardState[cardId] = 0;
+
+  const slidesHtml = hasPhotos
+    ? r.photos.map((src,i)=>`<div class="rakhi-slide"><img src="${src}" alt="${r.name} ${i+1}"></div>`).join('')
+    : `<div class="rakhi-slide"><span>Image Placeholder</span></div>`;
+
+  const dotsHtml = slideCount > 1
+    ? `<div class="rakhi-dots">${Array.from({length:slideCount}).map((_,i)=>`<div class="dot${i===0?' active':''}"></div>`).join('')}</div>`
+    : '';
+  const arrowsHtml = slideCount > 1
+    ? `<button class="rakhi-arrow left" onclick="moveRakhiCard('${cardId}',-1,${slideCount})">&#8249;</button>
+       <button class="rakhi-arrow right" onclick="moveRakhiCard('${cardId}',1,${slideCount})">&#8250;</button>`
+    : '';
+
+  return `<div class="rakhi-card">
+      <div class="rakhi-carousel" id="${cardId}" data-slides="${slideCount}"
+           ontouchstart="rakhiTouchStart(event,'${cardId}')"
+           ontouchend="rakhiTouchEnd(event,'${cardId}',${slideCount})">
+        <div class="rakhi-carousel-track" id="${cardId}-track">${slidesHtml}</div>
+        ${arrowsHtml}
+        ${dotsHtml}
+      </div>
+      <div class="rakhi-info">
+        <h5>${r.name}</h5>
+        <div class="price">${r.price}</div>
+      </div>
+    </div>`;
+}
+
+function renderRakhiDesigns(category){
+  const title = document.getElementById('rakhiDesignsTitle');
+  const grid = document.getElementById('pdRakhiDesigns');
+  const applies = category === 'budget' || category === 'customized';
+
+  if(!applies){
+    title.style.display = 'none';
+    grid.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+  title.style.display = '';
+  grid.style.display = '';
+  grid.innerHTML = rakhiDesigns.map((r,i)=>rakhiCard(r, `rakhiCard${i}`)).join('');
+}
+
+function moveRakhiCard(cardId, dir, slideCount){
+  const current = rakhiCardState[cardId] || 0;
+  const next = (current + dir + slideCount) % slideCount;
+  rakhiCardState[cardId] = next;
+  updateRakhiCard(cardId, next);
+}
+
+function updateRakhiCard(cardId, index){
+  const track = document.getElementById(cardId + '-track');
+  if(track) track.style.transform = `translateX(-${index*100}%)`;
+  const wrap = document.getElementById(cardId);
+  if(wrap){
+    wrap.querySelectorAll('.rakhi-dots .dot').forEach((d,i)=>d.classList.toggle('active', i===index));
+  }
+}
+
+let rakhiTouchX = 0;
+function rakhiTouchStart(e, cardId){
+  rakhiTouchX = e.changedTouches[0].clientX;
+}
+function rakhiTouchEnd(e, cardId, slideCount){
+  const diff = e.changedTouches[0].clientX - rakhiTouchX;
+  if(Math.abs(diff) > 35){
+    moveRakhiCard(cardId, diff < 0 ? 1 : -1, slideCount);
+  }
+}
+
 function openProduct(id){
   const p = products.find(x=>x.id===id);
   document.getElementById('pdName').textContent = p.name;
@@ -910,6 +1086,8 @@ function openProduct(id){
         <div class="addon-info"><h5>${a.name}</h5><div class="price">${a.price}</div></div>
       </div>`;
     }).join('');
+
+  renderRakhiDesigns(p.category);
 
   const hasPhotos = p.photos && p.photos.length > 0;
   pdSlideCount = hasPhotos ? p.photos.length : p.imageCount;
